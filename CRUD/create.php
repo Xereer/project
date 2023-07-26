@@ -12,6 +12,5 @@ if ($parent && $parent[1] <= 4 && $child) {
     $parentID = $parent[0];
     $childType = $parent[1] + 1;
     mysqli_query($connect, query: "INSERT INTO `university`(`id`, `parentID`, `typeID`, `name`, `isArchive`) VALUES (NULL,'$parentID','$childType','$child','0')");
-    echo "Success";
 }
 header('Location: ../index.php');
