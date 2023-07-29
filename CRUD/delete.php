@@ -2,21 +2,32 @@
 
 require_once('../connect.php');
 
-$deleteName = $_POST['deleteName'];
+$deleteId = $_POST['deleteId'];
 
-$id = mysqli_query($connect, query: "SELECT `id` FROM `university` WHERE `name` = '$deleteName'");
-$id = mysqli_fetch_row($id)[0];
+$sql = "SELECT id FROM university WHERE id = :id";
+$stmt = $pdo->prepare($sql);
+$stmt ->execute([
+    'id' => $deleteId
+]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$parentId = $user['id'];
 
-function delete($parentId, $connect)
-{
-    mysqli_query($connect, "UPDATE university SET isArchive = '1' WHERE id = '$parentId'");
-    $child = mysqli_query($connect, query: "SELECT `id` FROM `university` WHERE `parentID` = '$parentId'");
-    $child = mysqli_fetch_all($child);
+function delete($parentId)
+{    
+    global $pdo;
+    $sql = "SELECT id FROM university WHERE parentID = $parentId";
+    $stmt = $pdo->query($sql);
+    $child = $stmt->fetchAll(PDO::FETCH_ASSOC);
     foreach ($child as $value) {
-        delete($value[0], $connect);
+        delete($value['id']);
     }
+    $sql = "UPDATE university SET isArchive = 1 WHERE id = :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        'id' => $parentId
+    ]);
 }
 
-delete($id, $connect);
+delete($parentId);
 header('Location: ../index.php');
 ?>

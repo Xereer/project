@@ -2,6 +2,7 @@
 
 require_once('../connect.php');
 
-mysqli_query($connect, query: "UPDATE `university` SET `isArchive`='0'");
+$sql = "UPDATE university SET isArchive = 0";
+$stmt = $pdo->query($sql);
 
 header('Location: ../index.php');
