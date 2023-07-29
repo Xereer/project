@@ -8,22 +8,11 @@ $childName = $_POST['childName'];
 
 // отправлять childType (это фронт отправляет) + проверка !!!! еще try catch
 
-$sql = "SELECT name, typeID FROM university WHERE id = :id";
-$stmt = $pdo->prepare($sql);
-$stmt ->execute([
-    'id' => $parentID
-]);
-$parent = $stmt->fetch(PDO::FETCH_ASSOC);
-var_dump($parent['name']);
-try{
-    $sql = "SELECT name, typeID FROM university WHERE id = :id";
-    $stmt = $pdo->prepare($sql);
-    $stmt ->execute([
-    'id' => $parentID
-]);
-$parent = $stmt->fetch(PDO::FETCH_ASSOC);
-}catch(PDOException $exeption){
-    echo "Error: {$exeption->getMessage()}";
+if ($parent && $parent[1] <= 4 && $child) {
+    $parentID = $parent[0];
+    $childType = $parent[1] + 1;
+    mysqli_query($connect, query: "INSERT INTO `university`(`id`, `parentID`, `typeID`, `name`, `isArchive`) VALUES (NULL,'$parentID','$childType','$child','0')");
+    echo "Success";
 }
 $sql = "INSERT INTO university(id, parentID, typeID, name, isArchive) VALUES (:id, :parentID, :typeID, :name, :isArchive)";
 $stmt = $pdo->prepare($sql);
