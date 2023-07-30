@@ -11,7 +11,6 @@
     <?php
     
     require_once 'connect.php';
-    // // require_once 'typeTable.php';
     // require_once 'startTable.php';
     require_once 'CRUD/read.php';
 
