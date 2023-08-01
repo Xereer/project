@@ -6,8 +6,20 @@ $parentID = $_POST['parentID'];
 $childType = $_POST['childType'];
 $childName = $_POST['childName'];
 
-// отправлять childType (это фронт отправляет) + проверка !!!! еще try catch
+
+
 try{
+    $sql = "SELECT id, typeID FROM university WHERE id = :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt ->execute([
+        'id' => $parentID
+    ]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$user || $user['typeID'] + 1 != $childType){
+        echo 'Error';
+        die;
+    }
     $sql = "INSERT INTO university(id, parentID, typeID, name, isArchive) VALUES (:id, :parentID, :typeID, :name, :isArchive)";
     $stmt = $pdo->prepare($sql);
     $stmt -> execute([

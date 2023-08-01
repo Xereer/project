@@ -1,5 +1,7 @@
 <?php
 
+require_once('connect.php');
+
 try{
     $sql = "INSERT INTO university(id, parentID, typeID, name, isArchive) VALUES 
     ('1','0','1','РГУ НГ','0'),

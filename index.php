@@ -8,32 +8,16 @@
 </head>
 
 <body>
+    <p>id название</p>
     <?php
-    
-    require_once 'connect.php';
+
     // require_once 'startTable.php';
-    require_once 'CRUD/read.php';
+    require_once 'CRUD/read.php';    
 
-    // $str = mysqli_query($connect, query: "SELECT * FROM `university` WHERE `isArchive` = '0'");
-    // $str = mysqli_fetch_all($str);
-    // //var_dump($str);
-    // foreach ($str as $value) {
-    //         echo ($value[3]) . '<br>';
-    //     }
-
-    // сделать вложенность
-    // подключение через pdo c коммитом и без (autocommit, dbcommit, dbrollback) prepare, select * from table where id = :id sql инъекция
-    // функция выполнения запроса в базу
-    // singleton 
-    // sql из отдельного файла
-    // запрос через try catch (dbrollback)
-
-
-    // 
     ?>
     <br>
     <form action="CRUD/create.php" method="post">
-        <p>Родитель</p>
+        <p>id родителя</p>
         <input type="text" name="parentID">
         <p>Новый элемент</p>
         <input type="text" name="childName"><br>
@@ -43,7 +27,7 @@
     </form><br>
 
     <form action="CRUD/update.php" method="post">
-        <p>Название</p>
+        <p>id названия</p>
         <input type="text" name="updateId">
         <p>Новое название</p>
         <input type="text" name="newName"><br>
@@ -51,7 +35,7 @@
     </form><br>
 
     <form action="CRUD/delete.php" method="post">
-        <p>Название</p>
+        <p>id</p>
         <input type="text" name="deleteId">
         <p><button type="sumbit">Удалить</button></p>
     </form>
