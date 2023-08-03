@@ -8,13 +8,17 @@
 </head>
 
 <body>
-    <p>id название</p>
-    <?php
+    <pre id="lego"></pre>
 
-    // require_once 'startTable.php';
-    require_once 'CRUD/read.php';    
+    <script>
+        <?php
 
-    ?>
+        // require_once 'startTable.php';
+        require_once 'CRUD/read.php';
+        ?>
+        let jsonData = <?php echo $lego; ?>;
+        document.getElementById("lego").innerHTML = (JSON.stringify(jsonData,null,4));
+    </script>
     <br>
     <form action="CRUD/create.php" method="post">
         <p>id родителя</p>

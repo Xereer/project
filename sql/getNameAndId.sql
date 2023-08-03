@@ -1,0 +1,1 @@
+SELECT * FROM university WHERE isArchive = 0;

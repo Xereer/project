@@ -1,27 +1,33 @@
 <?php
 
 require_once 'connect.php';
+$db = Database::getInstance();
+$pdo = $db->getPDO();
 
-try{
-    $pdo->beginTransaction();
-    function read($id) {
-        $db = Database::getInstance();
-        $pdo = $db->getPDO();
-    
-        $sql = "SELECT id, name FROM university WHERE parentID = $id AND isArchive = 0";
-        $stmt = $pdo->query($sql);
-        $child = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-        foreach ($child as $value) {
-            echo ($value['id']) . " " . ($value['name']) . '<br>';
-            read($value['id']);
+$sql = file_get_contents (__DIR__.'/../sql/getNameAndId.sql');
+$stmt = $pdo->query($sql);
+$elem = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+try {
+
+    function read ($elem, $id)
+    {
+        $arr = array();
+        foreach ($elem as $value) {
+            if ($value['parentID'] === $id) {
+                $child = read($elem, $value['id']);
+
+                if (!empty($child)) {
+                    $value['child'] = $child;
+                }
+                $arr[$value['id']] = array('id' => $value['id'], 'name' => $value['name'], 'child' => $child);
+            }
         }
+        return $arr;
     }
-    $pdo->commit();
+    $lego = json_encode(read($elem,0));
 
-}catch(PDOException $exeption){
-    $pdo->rollBack();
-    echo "Error: {$exeption->getMessage()}";
+} catch (PDOException $exception) {
+    echo "Error: {$exception->getMessage()}";
 }
 
-read (0);

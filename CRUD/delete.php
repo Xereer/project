@@ -1,45 +1,36 @@
 <?php
 
 require_once('../connect.php');
+$db = Database::getInstance();
+$pdo = $db->getPDO();
 $deleteId = $_POST['deleteId'];
 
 try {
-    $pdo->beginTransaction();
-    $sql = "SELECT id FROM university WHERE id = :id";
-    $stmt = $pdo->prepare($sql);
-    $stmt ->execute([
-        'id' => $deleteId
-    ]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$user){
-        echo 'Error';
-        die;
-    }
-    $parentId = $user['id'];
-
     function delete($parentId)
-    {    
-        $db = Database::getInstance();
-        $pdo = $db->getPDO();
-        $sql = "SELECT id FROM university WHERE parentID = $parentId";
-        $stmt = $pdo->query($sql);
+    {
+        global $pdo;
+        $sql = file_get_contents (__DIR__.'/../sql/getIdByParentId.sql');
+        $stmt = $pdo->prepare($sql);
+        $stmt ->execute([
+            'parentID' => $parentId
+        ]);
         $child = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($child as $value) {
             delete($value['id']);
         }
-        $sql = "UPDATE university SET isArchive = 1 WHERE id = :id";
+        $sql = file_get_contents (__DIR__.'/../sql/deleteElement.sql');
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             'id' => $parentId
         ]);
     }
-
-    delete($parentId);
+    $pdo->beginTransaction();
+    delete($deleteId);
     $pdo->commit();
     header('Location: ../index.php');
-}catch(PDOException $exeption){
+} catch (PDOException $exception) {
     $pdo->rollBack();
-    echo "Error: {$exeption->getMessage()}";
+    echo "Error: {$exception->getMessage()}";
 }
 
 ?>

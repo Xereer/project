@@ -1,0 +1,1 @@
+UPDATE university SET isArchive = 0
