@@ -9,17 +9,17 @@
 
 <body>
     <pre id="lego"></pre>
-
     <script>
         <?php
 
-        // require_once 'startTable.php';
+//        require_once 'startTable.php';
         require_once 'CRUD/read.php';
+//        require_once 'propsTables.php';
         ?>
         let jsonData = <?php echo $lego; ?>;
         document.getElementById("lego").innerHTML = (JSON.stringify(jsonData,null,4));
     </script>
-    <br>
+    <hr><br>
     <form action="CRUD/create.php" method="post">
         <p>id родителя</p>
         <input type="text" name="parentID">
@@ -27,8 +27,8 @@
         <input type="text" name="childName"><br>
         <p>Тип элемента</p>
         <input type="text" name="childType"><br>
-        <p><button type="sumbit">Добавить</button></p>
-    </form><br>
+        <p><button type="sumbit">Добавить</button>
+    </form><hr><br>
 
     <form action="CRUD/update.php" method="post">
         <p>id названия</p>
@@ -36,7 +36,7 @@
         <p>Новое название</p>
         <input type="text" name="newName"><br>
         <p><button type="sumbit">Изменить</button></p>
-    </form><br>
+    </form><hr><br>
 
     <form action="CRUD/delete.php" method="post">
         <p>id</p>

@@ -1,14 +1,14 @@
 <?php
 
 require_once 'connect.php';
+require_once 'CRUD/properties.php';
 $db = Database::getInstance();
 $pdo = $db->getPDO();
 
-$sql = file_get_contents (__DIR__.'/../sql/getNameAndId.sql');
-$stmt = $pdo->query($sql);
-$elem = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 try {
+    $sql = file_get_contents (__DIR__.'/../sql/getNameAndId.sql');
+    $stmt = $pdo->query($sql);
+    $elem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     function read ($elem, $id)
     {
@@ -20,14 +20,14 @@ try {
                 if (!empty($child)) {
                     $value['child'] = $child;
                 }
-                $arr[$value['id']] = array('id' => $value['id'], 'name' => $value['name'], 'child' => $child);
+                $arr[] = array('id' => $value['id'], 'name' => $value['name'],...getProperties($value['id']), 'child' => $child);
             }
         }
         return $arr;
     }
+
     $lego = json_encode(read($elem,0));
 
 } catch (PDOException $exception) {
     echo "Error: {$exception->getMessage()}";
 }
-

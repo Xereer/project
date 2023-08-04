@@ -34,6 +34,3 @@ class Database {
 }
 $db = Database::getInstance();
 $pdo = $db->getPDO();
-
-
-

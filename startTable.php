@@ -15,8 +15,8 @@ try {
                                                                   ('9','7','5','Романов','0'),
                                                                   ('10','7','5','Иванов','0')";
     $pdo->exec($sql);
-} catch (PDOException $exeption) {
-    echo "Записи уже добавлены в таблицу university {$exeption->getMessage()}";
+} catch (PDOException $exception) {
+    echo "Записи уже добавлены в таблицу university {$exception->getMessage()}";
 }
 try {
     $sql = "INSERT INTO typename(id, name) VALUES 
@@ -26,6 +26,6 @@ try {
                                    ('4', 'Группа'),
                                    ('5', 'Студент')";
     $pdo->exec($sql);
-} catch (PDOException $exeption) {
-    echo "Записи уже добавлены в таблицу typename {$exeption->getMessage()}";
+} catch (PDOException $exception) {
+    echo "Записи уже добавлены в таблицу typename {$exception->getMessage()}";
 }

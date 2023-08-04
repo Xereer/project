@@ -1,0 +1,1 @@
+SELECT proptoelem.value, properties.alias FROM proptoelem LEFT JOIN properties ON proptoelem.propId = properties.id WHERE proptoelem.id_univ = :id AND proptoelem.isArchive = 0 AND properties.isArchive = 0
