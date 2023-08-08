@@ -1,0 +1,1 @@
+UPDATE typesallow LEFT JOIN proptoelem ON typesallow.typeId = proptoelem.typeId SET typesallow.isArchive = 1, proptoelem.isArchive = 1  WHERE typesallow.id_prop = :id_prop AND typesallow.typeId = :typeId

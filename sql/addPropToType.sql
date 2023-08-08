@@ -1,0 +1,1 @@
+INSERT INTO typesallow (id_prop, typeId) VALUES (:id_prop, :typeId)

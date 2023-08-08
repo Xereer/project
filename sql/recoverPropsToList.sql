@@ -1,0 +1,1 @@
+UPDATE properties SET isArchive = 0 WHERE id = :id

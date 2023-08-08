@@ -18,14 +18,14 @@ try {
 } catch (PDOException $exception) {
     echo "Записи уже добавлены в таблицу university {$exception->getMessage()}";
 }
-try {
-    $sql = "INSERT INTO typename(id, name) VALUES 
-                                   ('1','Университет'),
-                                   ('2', 'Факультет'),
-                                   ('3', 'Кафедра'),
-                                   ('4', 'Группа'),
-                                   ('5', 'Студент')";
-    $pdo->exec($sql);
-} catch (PDOException $exception) {
-    echo "Записи уже добавлены в таблицу typename {$exception->getMessage()}";
-}
+//try {
+//    $sql = "INSERT INTO typename(id, name) VALUES
+//                                   ('1','Университет'),
+//                                   ('2', 'Факультет'),
+//                                   ('3', 'Кафедра'),
+//                                   ('4', 'Группа'),
+//                                   ('5', 'Студент')";
+//    $pdo->exec($sql);
+//} catch (PDOException $exception) {
+//    echo "Записи уже добавлены в таблицу typename {$exception->getMessage()}";
+//}

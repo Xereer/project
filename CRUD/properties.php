@@ -1,12 +1,12 @@
 <?php
 
-//require_once '../connect.php';
+require_once '../connect.php';
+$id = $_POST['elemId'];
 
-function getProperties($id)
-{
-    $db = Database::getInstance();
-    $pdo = $db->getPDO();
+$db = Database::getInstance();
+$pdo = $db->getPDO();
 
+try {
     $sql = file_get_contents (__DIR__ . '/../sql/getPropertiesById.sql');
     $stmt = $pdo->prepare($sql);
     $stmt ->execute([
@@ -17,11 +17,15 @@ function getProperties($id)
     $properties = array();
 
     foreach ($propsValues as $value) {
-        $properties[$value['alias']] = $value['value'];
+        $properties[$value['id']] = $value['alias'];
     }
-    return $properties;
+    session_start();
+    $_SESSION['properties'] = $properties;
+//    var_dump($properties);
+    header('Location: ../index.php');
+} catch (PDOException $exception) {
+    echo "Error: {$exception->getMessage()}";
 }
-//var_dump(getProperties(9));
 
 // по id получить элемент, в выпадающем списке его свойства после выбора свойства удалить или редактировать
 // для добавления в выпадающем списке только разрешенные свойства из таблицы для данного типа

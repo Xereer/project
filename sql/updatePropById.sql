@@ -1,0 +1,1 @@
+UPDATE proptoelem SET value = :value WHERE id = :id

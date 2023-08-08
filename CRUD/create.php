@@ -16,8 +16,8 @@ try {
         'id' => $parentID
     ]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if (!$user || $user['typeID'] + 1 != $childType) {
+
+    if (isset($parentID) && $user['typeID'] + 1 != $childType) {
         throw new Exception('ошибка заполнения');
     }
     $sql = file_get_contents(__DIR__.'/../sql/addNewElement.sql');
@@ -35,3 +35,5 @@ try {
     echo "Error: {$exception->getMessage()}";
     echo "{$exception->getTraceAsString()}";
 }
+
+// проверка введенных значений, исправить фронт

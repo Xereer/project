@@ -1,0 +1,1 @@
+INSERT INTO proptoelem (id_univ, propId, value, typeId) VALUES (:id_univ, :propId, :value, (SELECT typeID FROM university WHERE id = :id_univ))
