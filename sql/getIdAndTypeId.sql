@@ -1,0 +1,1 @@
+SELECT id, typeID FROM university WHERE id = :id

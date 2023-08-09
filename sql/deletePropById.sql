@@ -1,0 +1,1 @@
+UPDATE proptoelem SET isArchive = 1 WHERE id = :id

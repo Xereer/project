@@ -1,0 +1,1 @@
+SELECT id, alias, isArchive FROM properties

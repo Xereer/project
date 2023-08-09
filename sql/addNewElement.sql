@@ -1,0 +1,1 @@
+INSERT INTO university (parentID, typeID, name) VALUES (:parentID, :typeID, :name)
