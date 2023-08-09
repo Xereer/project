@@ -1,14 +1,18 @@
 <?php
 
 
-require_once('../connect.php');
+require_once '../connect.php';
+require_once '../emptyCheck.php';
 $db = Database::getInstance();
 $pdo = $db->getPDO();
 
-$updateId = $_POST['updateId'];
-$newName = $_POST['newName'];
 
 try {
+    $updateId = $_POST['updateId'];
+    $newName = $_POST['newName'];
+
+    checkVariables($updateId, $newName);
+
     $sql = file_get_contents (__DIR__.'/../sql/getIsArchive.sql');
     $stmt = $pdo->prepare($sql);
     $stmt ->execute([
@@ -27,7 +31,7 @@ try {
 
 } catch (PDOException $exception) {
     echo "Error: {$exception->getMessage()}";
-} catch (Exception $exception) {
-    echo "{$exception->getTraceAsString()}";
+} catch (Exception $e) {
+    echo "Error: {$e->getMessage()}";
 }
 header('Location: ../index.php');

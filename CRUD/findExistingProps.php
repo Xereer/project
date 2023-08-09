@@ -1,17 +1,14 @@
 <?php
 
 require_once '../connect.php';
-require_once '../emptyCheck.php';
 
 $db = Database::getInstance();
 $pdo = $db->getPDO();
 
 try {
-    $id = $_POST['elemId'];
+    $id = $_POST['propId'];
 
-    checkVariables($id);
-
-    $sql = file_get_contents (__DIR__ . '/../sql/getPropertiesById.sql');
+    $sql = file_get_contents (__DIR__ . '/../sql/getExistingProps.sql');
     $stmt = $pdo->prepare($sql);
     $stmt ->execute([
         'id' => $id
@@ -24,7 +21,7 @@ try {
         $properties[$value['id']] = $value['alias'];
     }
     session_start();
-    $_SESSION['properties'] = $properties;
+    $_SESSION['existingProperties'] = $properties;
 //    var_dump($properties);
     header('Location: ../index.php');
 } catch (PDOException $exception) {

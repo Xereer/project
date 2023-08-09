@@ -1,11 +1,13 @@
 <?php
 
-require_once('../connect.php');
+require_once '../connect.php';
+require_once '../emptyCheck.php';
 $db = Database::getInstance();
 $pdo = $db->getPDO();
-$deleteId = $_POST['deleteId'];
 
 try {
+    $deleteId = $_POST['deleteId'];
+    checkVariables($deleteId);
     function delete($parentId)
     {
         global $pdo;
@@ -31,6 +33,8 @@ try {
 } catch (PDOException $exception) {
     $pdo->rollBack();
     echo "Error: {$exception->getMessage()}";
+} catch (Exception $e) {
+    echo "Error: {$e->getMessage()}";
 }
 
 ?>

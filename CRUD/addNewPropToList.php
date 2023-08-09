@@ -1,10 +1,12 @@
 <?php
 
 require_once '../connect.php';
+require_once '../emptyCheck.php';
 
 try {
     $name = $_POST['name'];
     $alias = $_POST['alias'];
+    checkVariables($name, $alias);
 
     $sql = file_get_contents(__DIR__.'/../sql/addNewPropsToList.sql');
     $stmt = $pdo->prepare($sql);
@@ -15,8 +17,7 @@ try {
     header('Location: ../index.php');
 } catch (PDOException $exception) {
     echo "Error: {$exception->getMessage()}";
-} catch (Exception $exception) {
-    echo "Error: {$exception->getMessage()}";
-    echo "{$exception->getTraceAsString()}";
+} catch (Exception $e) {
+    echo "Error: {$e->getMessage()}";
 }
 

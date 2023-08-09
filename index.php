@@ -127,6 +127,17 @@
         <button type="sumbit">Добавить</button>
     </form>
     <br>
+    <form method="post" action="CRUD/findMissingProps.php">
+        <label for="inputId">Тип:</label>
+        <select id="propertySelect" name="propMissId">
+            <option value="1">Университет</option>
+            <option value="2">Факультет</option>
+            <option value="3">Кафедра</option>
+            <option value="4">Группа</option>
+            <option value="5">Студент</option>
+        </select>
+        <input type="submit" value="Поиск">
+    </form>
     <form method="post" action="CRUD/addPropToType.php">
         <label for="inputId">Тип</label>
         <select id="propertySelect" name="type">
@@ -140,8 +151,8 @@
         <select id="propertySelect" name="property">
             <?php
             session_start();
-            if (isset($_SESSION['currentProps']) && !empty($_SESSION['currentProps'])) {
-                foreach ($_SESSION['currentProps'] as $key => $value) {
+            if (isset($_SESSION['missingProperties']) && !empty($_SESSION['missingProperties'])) {
+                foreach ($_SESSION['missingProperties'] as $key => $value) {
                     echo '<option value="' . $key . '">' . $value . '</option>';
                 }
             } else {
@@ -150,6 +161,17 @@
             ?>
         </select>
         <button type="sumbit">Добавить свойство для типа</button>
+    </form>
+    <form method="post" action="CRUD/findExistingProps.php">
+        <label for="inputId">Тип:</label>
+        <select id="propertySelect" name="propId">
+            <option value="1">Университет</option>
+            <option value="2">Факультет</option>
+            <option value="3">Кафедра</option>
+            <option value="4">Группа</option>
+            <option value="5">Студент</option>
+        </select>
+        <input type="submit" value="Поиск">
     </form>
     <form method="post" action="CRUD/deletePropToType.php">
         <label for="inputId">Тип</label>
@@ -164,8 +186,8 @@
         <select id="propertySelect" name="property">
             <?php
             session_start();
-            if (isset($_SESSION['currentProps']) && !empty($_SESSION['currentProps'])) {
-                foreach ($_SESSION['currentProps'] as $key => $value) {
+            if (isset($_SESSION['existingProperties']) && !empty($_SESSION['existingProperties'])) {
+                foreach ($_SESSION['existingProperties'] as $key => $value) {
                     echo '<option value="' . $key . '">' . $value . '</option>';
                 }
             } else {
@@ -173,31 +195,7 @@
             }
             ?>
         </select>
-        <button type="sumbit">Убать свойство у типа</button>
-    </form>
-    <form method="post" action="CRUD/recoverPropToType.php">
-        <label for="inputId">Тип</label>
-        <select id="propertySelect" name="type">
-            <option value="1">Университет</option>
-            <option value="2">Факультет</option>
-            <option value="3">Кафедра</option>
-            <option value="4">Группа</option>
-            <option value="5">Студент</option>
-        </select>
-        <label for="inputId">Свойство</label>
-        <select id="propertySelect" name="property">
-            <?php
-            session_start();
-            if (isset($_SESSION['currentProps']) && !empty($_SESSION['currentProps'])) {
-                foreach ($_SESSION['currentProps'] as $key => $value) {
-                    echo '<option value="' . $key . '">' . $value . '</option>';
-                }
-            } else {
-                echo '<option value="-1">Нет доступных свойств</option>';
-            }
-            ?>
-        </select>
-        <button type="sumbit">Вернуть свойство у типа</button>
+        <button type="sumbit">Убрать свойство у типа</button>
     </form>
 
     <hr>

@@ -1,7 +1,7 @@
 <?php
 
-
-require_once('../connect.php');
+require_once '../emptyCheck.php';
+require_once '../connect.php';
 $db = Database::getInstance();
 $pdo = $db->getPDO();
 
@@ -10,6 +10,8 @@ $childType = $_POST['childType'];
 $childName = $_POST['childName'];
 
 try {
+    checkVariables($childType, $childName);
+
     $sql = file_get_contents(__DIR__.'/../sql/getIdAndTypeId.sql');
     $stmt = $pdo->prepare($sql);
     $stmt ->execute([
@@ -31,9 +33,8 @@ try {
     header('Location: ../index.php');
 } catch (PDOException $exception) {
     echo "Error: {$exception->getMessage()}";
-} catch (Exception $exception) {
-    echo "Error: {$exception->getMessage()}";
-    echo "{$exception->getTraceAsString()}";
+} catch (Exception $e) {
+    echo "Error: {$e->getMessage()}";
 }
 
 // проверка введенных значений, исправить фронт
