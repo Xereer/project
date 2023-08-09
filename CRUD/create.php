@@ -1,9 +1,6 @@
 <?php
 
-require_once '../emptyCheck.php';
-require_once '../connect.php';
-$db = Database::getInstance();
-$pdo = $db->getPDO();
+require_once 'script.php';
 
 $parentID = $_POST['parentID'];
 $childType = $_POST['childType'];
@@ -13,11 +10,10 @@ try {
     checkVariables($childType, $childName);
 
     $sql = file_get_contents(__DIR__.'/../sql/getIdAndTypeId.sql');
-    $stmt = $pdo->prepare($sql);
-    $stmt ->execute([
+    $params = [
         'id' => $parentID
-    ]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    ];
+    $user = executeSqlQuery($pdo,$sql,$params, true)[0];
 
     if (isset($parentID) && $user['typeID'] + 1 != $childType) {
         throw new Exception('ошибка заполнения');
@@ -30,7 +26,7 @@ try {
         'name' => $childName
     ]);
 
-    header('Location: ../index.php');
+    header('Location: ../index.html');
 } catch (PDOException $exception) {
     echo "Error: {$exception->getMessage()}";
 } catch (Exception $e) {

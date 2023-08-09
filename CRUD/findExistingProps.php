@@ -1,19 +1,15 @@
 <?php
 
-require_once '../connect.php';
-
-$db = Database::getInstance();
-$pdo = $db->getPDO();
+require_once 'script.php';
 
 try {
     $id = $_POST['propId'];
 
     $sql = file_get_contents (__DIR__ . '/../sql/getExistingProps.sql');
-    $stmt = $pdo->prepare($sql);
-    $stmt ->execute([
+    $params = [
         'id' => $id
-    ]);
-    $propsValues = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    ];
+    $propsValues = executeSqlQuery($pdo,$sql,$params,true);;
 
     $properties = array();
 
@@ -23,7 +19,7 @@ try {
     session_start();
     $_SESSION['existingProperties'] = $properties;
 //    var_dump($properties);
-    header('Location: ../index.php');
+    header('Location: ../index.html');
 } catch (PDOException $exception) {
     echo "Error: {$exception->getMessage()}";
 } catch (Exception $e) {

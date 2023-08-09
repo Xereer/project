@@ -1,10 +1,7 @@
 <?php
 
 
-require_once '../connect.php';
-require_once '../emptyCheck.php';
-$db = Database::getInstance();
-$pdo = $db->getPDO();
+require_once 'script.php';
 
 
 try {
@@ -14,24 +11,23 @@ try {
     checkVariables($updateId, $newName);
 
     $sql = file_get_contents (__DIR__.'/../sql/getIsArchive.sql');
-    $stmt = $pdo->prepare($sql);
-    $stmt ->execute([
+    $params = [
         'id' => $updateId
-    ]);
-    $isArchive = $stmt->fetch(PDO::FETCH_ASSOC);
+    ];
+    $isArchive = executeSqlQuery($pdo,$sql,$params,true)[0];
     if ($isArchive['isArchive'] === 1) {
         throw new Exception('Элемент удален');
     }
     $sql = file_get_contents(__DIR__.'/../sql/updateElement.sql');
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
+    $params = [
         'id' => $updateId,
         'name' => $newName
-    ]);
+    ];
+    executeSqlQuery($pdo,$sql,$params,false);
+    header('Location: ../index.html');
 
 } catch (PDOException $exception) {
     echo "Error: {$exception->getMessage()}";
 } catch (Exception $e) {
     echo "Error: {$e->getMessage()}";
 }
-header('Location: ../index.php');

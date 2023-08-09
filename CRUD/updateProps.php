@@ -1,7 +1,6 @@
 <?php
 
-require_once '../connect.php';
-require_once '../emptyCheck.php';
+require_once 'script.php';
 
 try {
     $updatePropId = $_POST['UpdatePropId'];
@@ -10,12 +9,12 @@ try {
     checkVariables($updatePropId, $newVal);
 
     $sql = file_get_contents(__DIR__.'/../sql/updatePropById.sql');
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
+    $params = [
         'id' => $updatePropId,
         'value' => $newVal
-    ]);
-    header('Location: ../index.php');
+    ];
+    executeSqlQuery($pdo,$sql,$params,false);
+    header('Location: ../index.html');
 } catch (PDOException $exception) {
     echo "Error: {$exception->getMessage()}";
 } catch (Exception $e) {

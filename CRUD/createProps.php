@@ -1,7 +1,6 @@
 <?php
 
-require_once '../connect.php';
-require_once '../emptyCheck.php';
+require_once 'script.php';
 
 try {
     session_start();
@@ -12,13 +11,13 @@ try {
     checkVariables($createPropId, $value, $id);
 
     $sql = file_get_contents(__DIR__.'/../sql/createProp.sql');
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
+    $params = [
         'propId' => $createPropId,
         'value' => $value,
         'id_univ' => $id
-    ]);
-    header('Location: ../index.php');
+    ];
+    executeSqlQuery($pdo,$sql,$params,false);
+    header('Location: ../index.html');
 } catch (PDOException $exception) {
     echo "Error: {$exception->getMessage()}";
 } catch (Exception $e) {

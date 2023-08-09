@@ -1,6 +1,6 @@
 <?php
 
-require_once '../connect.php';
+require_once 'script.php';
 
 try {
     $sql = file_get_contents (__DIR__ . '/../sql/getAllProps.sql');
@@ -21,7 +21,7 @@ try {
     $_SESSION['currentProps'] = $currentProps;
     $_SESSION['deletedProps'] = $deletedProps;
 //    var_dump($deletedProps);
-    header('Location: ../index.php');
+    header('Location: ../index.html');
 } catch (PDOException $exception) {
     echo "Error: {$exception->getMessage()}";
 }

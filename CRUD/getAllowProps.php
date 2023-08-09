@@ -1,10 +1,6 @@
 <?php
 
-require_once '../connect.php';
-require_once '../emptyCheck.php';
-
-$db = Database::getInstance();
-$pdo = $db->getPDO();
+require_once 'script.php';
 
 try {
     $id = $_POST['elemId'];
@@ -12,12 +8,10 @@ try {
     checkVariables($id);
 
     $sql = file_get_contents (__DIR__ . '/../sql/getAllowPropsByElemId.sql');
-    $stmt = $pdo->prepare($sql);
-    $stmt ->execute([
+    $params = [
         'id' => $id
-    ]);
-    $propsValues = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//    var_dump($propsValues);
+    ];
+    $propsValues = executeSqlQuery($pdo,$sql,$params,true);;
 
     $allowProperties = array();
 
@@ -28,7 +22,7 @@ try {
     $_SESSION['allowProperties'] = $allowProperties;
     $_SESSION['id'] = $id;
 //    var_dump($allowProperties);
-    header('Location: ../index.php');
+    header('Location: ../index.html');
 } catch (PDOException $exception) {
     echo "Error: {$exception->getMessage()}";
 } catch (Exception $e) {
